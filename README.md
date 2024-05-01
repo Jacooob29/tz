@@ -62,8 +62,6 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-find $1 -type f -exec cp --backup=t $2 \
-
 input_dir="$1"
 output_dir="$2"
 
@@ -82,6 +80,14 @@ files=$(find "$input_dir" -maxdepth 1 -type f)
 dirs=$(find "$input_dir" -mindepth 1 -type d)
 
 all_files=$(find "$input_dir" -type f)
+
+find "$input_dir" -type f | \
+    while read -r file; do
+        file_extension=$(echo "$file" | awk -F. '{print $NF}')
+        file_basename=$(basename "$file")
+        cp "$file" "$output_dir/$file_basename"
+        echo "Copied $file to $output_dir/$file_basename"
+    done
 
 echo "Files moved successfully."
 ```
