@@ -54,8 +54,7 @@ out_dir:
 ```
 
 ## Решение
-```
-
+```Bash
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
