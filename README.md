@@ -53,6 +53,40 @@ out_dir:
 5.txt
 ```
 
+## Решение
+```
+
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <input_dir> <output_dir>"
+    exit 1
+fi
+
+find $1 -type f -exec cp --backup=t $2 \
+
+input_dir="$1"
+output_dir="$2"
+
+if [ ! -d "$input_dir" ]; then
+    echo "Source directory does not exist: $input_dir"
+    exit 1
+fi
+
+if [ ! -d "$output_dir" ]; then
+    echo "Output directory does not exist: $output_dir"
+    exit 1
+fi
+
+files=$(find "$input_dir" -maxdepth 1 -type f)
+
+dirs=$(find "$input_dir" -mindepth 1 -type d)
+
+all_files=$(find "$input_dir" -type f)
+
+echo "Files moved successfully."
+```
+
 ## Автор
 
 Князев Яков (ВШЭ, бизнес-информатика, 1 курс, 232)
